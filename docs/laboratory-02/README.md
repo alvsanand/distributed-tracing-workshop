@@ -6,7 +6,7 @@ We will perform the following tasks:
 
 1. Install HotROD in K8s.
 2. Use the Jaeger UI
-3. Obtain the data flow of HotROD.
+3. Obtain the data flow of an application.
 4. Searching the source of a bottleneck using Jaeger.
 
 ## 1. Installing HotROD
@@ -50,7 +50,7 @@ Hotrod is a very simple application composed of 6 microservices:
 
 The storage nodes are not actually real, they are simulated by the app as internal components, but the top four microservices are indeed real.
 
-## 3. Getting the Data Flow
+## 3. Understanding the Data Flow of an application
 
 One of the main advantages of Distributed Tracing is that we are able to track a request through a software system that is distributed across multiple applications, services, and databases as well as intermediaries like proxies.
 
@@ -74,14 +74,6 @@ Now, Jaeger showS the trace of one of our request and displays some meta-data ab
 
 Using that information we can generate the data flow of the request:
 
-1. A ```HTTP GET``` request are sent the to ```/dispatch``` endpoint  of the ```frontend``` service.
-2. The ```frontend``` service makes a HTTP GET request to the ```/customer``` endpoint of the ```customer``` service.
-3. The ```customer``` service executes an statement in the ```MySQL DB``` and those results are sent to the ```frontend``` service.
-4. The ```frontend``` service makes a ```gRPC``` request ```Driver::findNearest``` to the driver service.
-5. The ```driver``` service makes several calls to ```Redis```. Some of them are failures.
-6. The ```frontend``` service executes many of ```HTTP GET``` requests to the ```/route``` endpoint of the ```route``` service.
-7. The ```frontend``` service returns the result.
-
 <mermaid>
 graph TD
     B[/Browser\] --> |1| F[frontend];
@@ -96,6 +88,14 @@ graph TD
     F[frontend] --> |6| Ro[route];
     F[frontend] --> |7| B[/Browser\];
 </mermaid>
+
+1. A ```HTTP GET``` request are sent the to ```/dispatch``` endpoint  of the ```frontend``` service.
+2. The ```frontend``` service makes a HTTP GET request to the ```/customer``` endpoint of the ```customer``` service.
+3. The ```customer``` service executes an statement in the ```MySQL DB``` and those results are sent to the ```frontend``` service.
+4. The ```frontend``` service makes a ```gRPC``` request ```Driver::findNearest``` to the driver service.
+5. The ```driver``` service makes several calls to ```Redis```. Some of them are failures.
+6. The ```frontend``` service executes many of ```HTTP GET``` requests to the ```/route``` endpoint of the ```route``` service.
+7. The ```frontend``` service returns the result.
 
 ## 4. Searching the source of a bottleneck
 

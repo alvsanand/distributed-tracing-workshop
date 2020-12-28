@@ -10,7 +10,7 @@ module.exports = {
     ],
     themeConfig: {
         displayAllHeaders: true,
-        lastUpdated: true,
+        lastUpdated: false,
         repo: 'https://github.com/alvsanand/distributed-tracing-workshop',
         docsDir: 'docs',
         editLinks: false,

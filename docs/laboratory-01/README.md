@@ -138,7 +138,7 @@ Now, the application is available at [http://localhost:7080/](http://localhost:7
 minikube delete --all
 ```
 
-## 6. Deploy Jaeger Operator
+## 6. Deploying Jaeger Operator
 
 ```sh
 kubectl create namespace observability
@@ -152,7 +152,7 @@ kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operato
 kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/master/deploy/cluster_role_binding.yaml
 ```
 
-## 7. Deploy Jaeger instance
+## 7. Deploying Jaeger instance
 
 Now, we will deploy a in-memory all-in-one instance of Jaeger, suitable for this workshop.
 
@@ -175,7 +175,7 @@ Now, we will deploy a in-memory all-in-one instance of Jaeger, suitable for this
     
     ```
 
-## 8. Validate deployment
+## 8. Validating Jaeger deployment
 
 To validate that Jaeger is working correctly, let’s forward its port and see if we can access the UI:
 

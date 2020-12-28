@@ -7,7 +7,7 @@ Distributed tracing, also called distributed request tracing, is a method used t
 Through this workshop you will be able to learn:
 
 - What are distributed tracing and OpenTracing / Jaeger.
-- How to install Jaeger into Minikube.
+- How to install Jaeger into a local Kubernetes.
 - How to use Jaeger.
 - How to integrate your application into OpenTracing / Jaeger.
 

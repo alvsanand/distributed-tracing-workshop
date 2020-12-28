@@ -59,7 +59,7 @@ Before anything else, we are going to install the application without any modifi
     kubectl delete namespace kubernetes-microservices
     ```
 
-## 2. Integrate flask-app with Jaeger
+## 2. Integrating flask-app with Jaeger
 
 Firstly, ```flask-app``` will be modified. Therefore, we will add the necessary code to application and the deployment configuration in order to work with Jaeger.
 
@@ -79,9 +79,9 @@ Firstly, ```flask-app``` will be modified. Therefore, we will add the necessary 
 
     <<< @/docs/laboratory-03/files/changes_kubernetes_flask_deployment.yml
 
-## 3. Integrate sinatra-app with Jaeger
+## 3. Integrating sinatra-app with Jaeger
 
-Now, it is time to modify ```simatra-app```, the Ruby service. We will also add the necessary code to application and the deployment configuration in order to work with Jaeger.
+Next, it is time to modify ```simatra-app```, the Ruby service. We will also add the necessary code to application and the deployment configuration in order to work with Jaeger.
 
 1. Add [jaeger-client-ruby](https://github.com/salemove/jaeger-client-ruby) dependencies:
 
@@ -95,7 +95,7 @@ Now, it is time to modify ```simatra-app```, the Ruby service. We will also add 
 
     <<< @/docs/laboratory-03/files/changes_kubernetes_flask_deployment.yml
 
-## 4. Propagate tracing HTTP headers
+## 4. Propagating the tracing HTTP headers
 
 Now, we are able to trace all requests from the Python and Ruby services. However, the requests made from ```flask-app``` to ```sinatra-app``` are not correlated because the span is not propagated. To solve that, we have to modify again ```flask-app``` to do so.
 
@@ -107,7 +107,7 @@ Now, we are able to trace all requests from the Python and Ruby services. Howeve
 
     <<< @/docs/laboratory-03/files/changes_flaskapp_app_views_2.py
 
-## 5. Install modified version of the application in k8s
+## 5. Installing modified version of the application in k8s
 
 After all changes are performed, it is time to install again the application with the modifications.
 
@@ -127,9 +127,9 @@ After all changes are performed, it is time to install again the application wit
 
     <<< @/docs/laboratory-03/files/kubernetes-microservices_deployment.sh
 
-## 6. Test modified version of the application
+## 6. Testing the application
 
-Finally, let's go test the application and check the modifications.
+Finally, let's go test the application and check Jaeger for the service traces.
 
 1. Test the application:
 
@@ -137,10 +137,19 @@ Finally, let's go test the application and check the modifications.
 
 2. Go to the **Search** page in the **Jaeger UI**.
 
-3. Select ```flask-app``` in the **Service** drop-down list to filter traces.
+3. Select ```flask-app``` in the **Service** drop-down list to filter the traces.
 
 4. Click **Find Traces**.
     ![Traces](./img/traces.png)
 
 5. Next, click in one of the ```logs``` trace on the right side.
     ![Logs trace](./img/logs-trace.png)
+
+::: tip This is the end
+
+You have reached the end of the workshop. I hope you have learn a little bit about [Distributed Tracing](https://opentracing.io/docs/overview/what-is-tracing/) and enjoy doing the different laboratories of this workshop.
+
+*Thanks dude!*
+
+![Thanks dude](./img/you_got_it_dude.gif)
+:::
