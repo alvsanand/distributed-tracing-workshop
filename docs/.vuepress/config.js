@@ -11,7 +11,7 @@ module.exports = {
     themeConfig: {
         displayAllHeaders: true,
         lastUpdated: true,
-        repo: 'https://gitlab.bluetab.net/cloud-practice/art-culos-kubernetes/distributed-tracing-workshop',
+        repo: 'https://github.com/alvsanand/distributed-tracing-workshop',
         docsDir: 'docs',
         editLinks: false,
         logo: '/img/distributed-tracing_practice.png',
