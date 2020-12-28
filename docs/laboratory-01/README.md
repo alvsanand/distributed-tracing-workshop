@@ -2,7 +2,7 @@
 
 The first laboratory of the workshop consist of launching a Kubernetes cluster in our local machine and install the [Jaeger Operator](https://github.com/jaegertracing/jaeger-operator). In order to achieve that, we will use [minikube](https://kubernetes.io/docs/tutorials/hello-minikube/) that eases a lot this task.
 
-We will perform the following task:
+We will perform the following tasks:
 
 1. Install and run a Minikube cluster in your laptop.
 2. Use `kubectl` while deploying a sample application.
@@ -25,7 +25,7 @@ Depending of your OS, you will have different options for installing Minilube.
 
 ::: tab Linux
 
-```shell
+```sh
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo mv minikube-linux-amd64 /usr/local/bin/minikube
 sudo chmod a+x /usr/local/bin/minikube
@@ -37,20 +37,20 @@ sudo chmod a+x /usr/local/bin/minikube
 
 If the [Brew Package Manager](https://brew.sh/) installed:
 
-```shell
+```sh
 brew install minikube
 ```
 
 If `which minikube` fails after installation via brew, you may have to remove the minikube cask and link the binary:
 
-```shell
+```sh
 brew cask remove minikube
 brew link minikube
 ```
 
 Otherwise, download minikube directly:
 
-```shell
+```sh
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64
 sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 ```
@@ -61,7 +61,7 @@ sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 
 If the [Chocolatey Package Manager](https://chocolatey.org/) is installed, use it to install minikube:
 
-```shell
+```sh
 choco install minikube
 ```
 
@@ -75,7 +75,7 @@ Otherwise, download and run the [Windows installer](https://storage.googleapis.c
 
 From a terminal with administrator access (but not logged in as root), run:
 
-```shell
+```sh
 minikube start --cpus 2 --memory 8192 --disk-size 40g --addons=ingress
 ```
 
@@ -83,21 +83,21 @@ minikube start --cpus 2 --memory 8192 --disk-size 40g --addons=ingress
 
 If you already have kubectl installed, you can now use it to access your shiny new cluster:
 
-```shell
+```sh
 kubectl config use-context minikube
 kubectl get po -A
 ```
 
 Alternatively, minikube can download the appropriate version of kubectl, if you don't mind the double-dashes in the command-line:
 
-```shell
+```sh
 alias kubectl="minikube kubectl --"
 kubectl -- get po -A
 ```
 
 minikube bundles the Kubernetes Dashboard, allowing you to get easily acclimated to your new environment:
 
-```shell
+```sh
 minikube dashboard
 ```
 
@@ -105,26 +105,26 @@ minikube dashboard
 
 Create a sample deployment and expose it on port 8080:
 
-```shell
+```sh
 kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
 kubectl expose deployment hello-minikube --type=NodePort --port=8080
 ```
 
 It may take a moment, but your deployment will soon show up when you run:
 
-```shell
+```sh
 kubectl get services hello-minikube
 ```
 
 The easiest way to access this service is to let minikube launch a web browser for you:
 
-```shell
+```sh
 minikube service hello-minikube
 ```
 
 Alternatively, use kubectl to forward the port:
 
-```shell
+```sh
 kubectl port-forward service/hello-minikube 7080:8080
 ```
 
@@ -134,13 +134,13 @@ Now, the application is available at [http://localhost:7080/](http://localhost:7
 
 > For now, we will not execute this command.
 
-```shell
+```sh
 minikube delete --all
 ```
 
 ## 6. Deploy Jaeger Operator
 
-```shell
+```sh
 kubectl create namespace observability
 kubectl create -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/master/deploy/crds/jaegertracing.io_jaegers_crd.yaml
 kubectl create -n observability -f https://raw.githubusercontent.com/jaegertracing/jaeger-operator/master/deploy/service_account.yaml
@@ -158,7 +158,7 @@ Now, we will deploy a in-memory all-in-one instance of Jaeger, suitable for this
 
 - Deploy the instance:
 
-    ```shell
+    ```sh
     kubectl apply -n observability -f - <<EOF
     apiVersion: jaegertracing.io/v1
     kind: Jaeger
@@ -169,7 +169,7 @@ Now, we will deploy a in-memory all-in-one instance of Jaeger, suitable for this
 
 - Check the instance:
 
-    ```shell
+    ```sh
     kubectl get jaegers -n observability
     kubectl get pods -n observability -l app.kubernetes.io/instance=jaeger-workshop
     
@@ -179,13 +179,13 @@ Now, we will deploy a in-memory all-in-one instance of Jaeger, suitable for this
 
 To validate that Jaeger is working correctly, let’s forward its port and see if we can access the UI:
 
-```shell
+```sh
 kubectl get -n observability ingress
 
-JAEGER_IP=$(kubectl get -n observability ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
-echo "http://$JAEGER_IP"
+K8S_INGRESS_IP=$(kubectl get -n observability ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+echo "http://$K8S_INGRESS_IP"
 ```
 
 Now, the application is available at the link printed before.
 
-![Jaeger UI](./jaeger_test.png)
+![Jaeger UI](./img/jaeger_test.png)

@@ -1,3 +1,6 @@
+
+const path = require("path");
+
 module.exports = {
     title: "Distributed Tracing Workshop ",
     description: "Distributed Tracing Workshop ",
@@ -36,5 +39,13 @@ module.exports = {
         '@vuepress/back-to-top',
         'seo',
         'element-tabs'
-    ]
+    ],
+    chainWebpack: config => {
+        config.module
+            .rule('md')
+            .test(/\.md$/)
+            .use(path.resolve(__dirname, './nunjucks'))
+            .loader(path.resolve(__dirname, './nunjucks'))
+            .end()
+    },
 }

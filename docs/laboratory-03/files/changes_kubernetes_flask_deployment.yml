@@ -1,0 +1,8 @@
+######################################
+# Add this after line "              value: "3000000""
+######################################
+            - name: JAEGER_AGENT_HOST
+              value: jaeger-workshop-agent.observability.svc.cluster.local
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+######################################

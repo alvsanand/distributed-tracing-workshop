@@ -2,88 +2,22 @@
 
 In the second laboratory of the workshop, we will install [HotROD (Rides on Demand)](https://github.com/jaegertracing/jaeger/tree/master/examples/hotrod) is a demo application that consists of several microservices and illustrates the use of the OpenTracing API. Afterwards, we will review most of the Jaeger features.
 
-We will perform the following task:
+We will perform the following tasks:
 
 1. Install HotROD in K8s.
 2. Use the Jaeger UI
 3. Obtain the data flow of HotROD.
-4. Search for problems in the service using Jaeger.
+4. Searching the source of a bottleneck using Jaeger.
 
 ## 1. Installing HotROD
 
 1. Install HotROD:
 
-    ```shell
-    kubectl create namespace hotrod
-
-    JAEGER_IP=$(kubectl get -n observability ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
-
-    kubectl apply -f - <<EOF
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      labels:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/instance: hotrod
-      name: hotrod-app
-      namespace: hotrod
-    spec:
-      replicas: 1
-      selector:
-        matchLabels:
-          app.kubernetes.io/component: app
-          app.kubernetes.io/instance: hotrod
-          app.kubernetes.io/name: hotrod-app
-      template:
-        metadata:
-          labels:
-            app.kubernetes.io/component: app
-            app.kubernetes.io/instance: hotrod
-            app.kubernetes.io/name: hotrod-app
-        spec:
-          containers:
-          - env:
-            - name: JAEGER_AGENT_HOST
-              value: jaeger-workshop-agent.observability.svc.cluster.local
-            - name: JAEGER_AGENT_PORT
-              value: "6831"
-            image: jaegertracing/example-hotrod:latest
-            imagePullPolicy: Always
-            args: ["all", "-j", "http://$JAEGER_IP"]
-            livenessProbe:
-              httpGet:
-                path: /
-                port: 8080
-            name: jaeger-hotrod
-            ports:
-            - containerPort: 8080
-            readinessProbe:
-              httpGet:
-                path: /
-                port: 8080
-    ---
-    apiVersion: v1
-    kind: Service
-    metadata:
-      labels:
-        app.kubernetes.io/component: service
-        app.kubernetes.io/instance: hotrod
-      name: hotrod-service
-      namespace: hotrod
-    spec:
-      selector:
-        app.kubernetes.io/component: app
-        app.kubernetes.io/instance: hotrod
-      ports:
-        - protocol: TCP
-          port: 8080
-          targetPort: 8080
-    EOF
-    ```
+    <<< @/docs/laboratory-02/files/hotrod_deployment.sh
 
 2. Enable port forwarding:
 
-    ```shell
+    ```sh
     kubectl port-forward -n hotrod service/hotrod-service 8080:8080
     ```
 
@@ -97,7 +31,7 @@ In the home page we have four customers, and by clicking one of the four buttons
 
 There are a few bits of debugging information we see on the screen.
 
-![Hotrod UI](./hotrod-ui.png)
+![Hotrod UI](./img/hotrod-ui.png)
 
 1. In the top left corner there is a ```web client id: 9323```. It is a random session ID assigned by Javascript UI; if we reload the page we get a different session ID.
 2. In the line about the car we see a request ID ```req: 9323-1```. It is a unique ID assigned by Javascript UI to each request it makes to the backend, composed of the session ID and a sequence number.
@@ -106,7 +40,7 @@ There are a few bits of debugging information we see on the screen.
 
 ### Architecture
 
-![Hotrod Architecture](./hotrod-architecture.png)
+![Hotrod Architecture](./img/hotrod-architecture.png)
 
 Hotrod is a very simple application composed of 6 microservices:
 
@@ -123,13 +57,13 @@ One of the main advantages of Distributed Tracing is that we are able to track a
 So, let’s find out the data flow of HotROD.
 
 1. Access HotROD \([http://localhost:8080/](http://localhost:8080/)\) and click several times in some of the customers.
-    ![Hotrod UI](./hotrod-ui.png)
+    ![Hotrod UI](./img/hotrod-ui.png)
 2. Go to the **Search** page in the **Jaeger UI**.
 3. Select ```frontend``` in the **Service** drop-down list because is our root service and ```HTTP GET /dispatch``` in the **Operation** drop-down list to filter the dispatch action.
 4. Click **Find Traces**.
-    ![Frontend traces](./frontend-traces.png)
+    ![Frontend traces](./img/frontend-traces.png)
 5. Next, click in one of the traces on the right side.
-    ![Frontend traces](./dispatch-trace.png)
+    ![Dispatch trace](./img/dispatch-trace.png)
 
 Now, Jaeger showS the trace of one of our request and displays some meta-data about it, such as the names of different services that participated in the trace, and the number of spans each service emitted to Jaeger.
 
@@ -163,16 +97,16 @@ graph TD
     F[frontend] --> |7| B[/Browser\];
 </mermaid>
 
-## 4. Stressing the system
+## 4. Searching the source of a bottleneck
 
 Another cool feature of Distributed Tracing is that using its information we can find easily the bottlenecks of our system. In order to do that we are going to stress the system making so many calls and using Jaeger we are going to find out the root of the problem.
 
 1. Access HotROD \([http://localhost:8080/](http://localhost:8080/)\) and click multiple times on the customers until the latency goes up very sharply.
-    ![HotROD latency](./hotrod_latency.png)
+    ![HotROD latency](./img/hotrod_latency.png)
 2. Click in the first **find trace** link which it will take us to see the trace of the request in Jaeger.
-    ![Jaeger request](./jaeger_request.png)
+    ![Jaeger request](./img/jaeger_request.png)
 3. Next, click in the ```HTTP GET /dispatch``` request to see a detailed view of its trace through the system.
-    ![Jaeger trace](./jaeger_trace.png)
+    ![Jaeger trace](./img/jaeger_trace.png)
 
 Now, we are able to see what going on in the system:
 
@@ -180,4 +114,4 @@ Now, we are able to see what going on in the system:
 2. The trace shows that the request was handle in almost 2 seconds.
 3. Reviewing all the span, we can detect that the ```customer``` service call to ```mysql``` service is generating more that 70% of the processing time. This is our most promising **bottleneck** candidate.
 4. Finally, we can click in the ```mysql``` service call to see more information about that specific **span**. Thanks that the developers added a custom tag ```sql.query``` we can identify very easily the SQL statement that is generating the problem.
-  ![Jaeger MySQL span](./jaeger_mysql_span.png)
+  ![Jaeger MySQL span](./img/jaeger_mysql_span.png)

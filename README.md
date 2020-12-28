@@ -12,7 +12,7 @@ The documentation of this project is VuePress compliant. So you can use it in or
 
 - Launch compiler:
 
-        ```shell
+        ```sh
         yarn install
         yarn run build
         ```
@@ -21,7 +21,7 @@ The documentation of this project is VuePress compliant. So you can use it in or
 
 - Start server
 
-        ```shell
+        ```sh
         yarn install
         yarn run start
         ```
