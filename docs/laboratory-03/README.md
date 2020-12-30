@@ -145,6 +145,9 @@ Finally, let's go test the application and check Jaeger for the service traces.
 5. Next, click in one of the ```logs``` trace on the right side.
     ![Logs trace](./img/logs-trace.png)
 
+<br />
+<br />
+
 ::: tip This is the END!!!
 
 You have reached the end of the workshop. I hope that you have now a good overview of [Distributed Tracing](https://opentracing.io/docs/overview/what-is-tracing/) and [Jaeguer](https://www.jaegertracing.io/). For sure, you are more confident in being able to use tracing in your new developments.
