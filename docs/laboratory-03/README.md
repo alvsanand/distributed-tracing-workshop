@@ -147,9 +147,9 @@ Finally, let's go test the application and check Jaeger for the service traces.
 
 ::: tip This is the END!!!
 
-You have reached the end of the workshop. I expect that you have now a good overview of [Distributed Tracing](https://opentracing.io/docs/overview/what-is-tracing/) and [Jaeguer](https://www.jaegertracing.io/). For sure, you are more confident in being able to use tracing in your new developments.
+You have reached the end of the workshop. I hope that you have now a good overview of [Distributed Tracing](https://opentracing.io/docs/overview/what-is-tracing/) and [Jaeguer](https://www.jaegertracing.io/). For sure, you are more confident in being able to use tracing in your new developments.
 
-Finally, I expect that you have enjoyed doing the different laboratories of this workshop because this was designed no do so.
+Finally, I expect that you have enjoyed doing the different laboratories of this workshop because this was designed to do so.
 
 *Thanks dude!*
 
