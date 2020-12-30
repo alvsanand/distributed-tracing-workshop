@@ -1,3 +1,8 @@
+---
+title: Lab 1 - Installing Jaeger
+image: /img/distributed-tracing_practice_preview.png
+---
+
 # Lab 1 - Installing Jaeger
 
 The first laboratory of the workshop consist of launching a Kubernetes cluster in our local machine and install the [Jaeger Operator](https://github.com/jaegertracing/jaeger-operator). In order to achieve that, we will use [minikube](https://kubernetes.io/docs/tutorials/hello-minikube/) that eases a lot this task.

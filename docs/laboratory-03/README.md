@@ -1,3 +1,8 @@
+---
+title: Lab 3 - Integrating an app
+image: /img/distributed-tracing_practice_preview.png
+---
+
 # Lab 3 - Integrating an app
 
 In the last laboratory, we will learn how to modify a existing application in order to work with Jaeger. To cover different implementations of [Jaeger Client](https://www.jaegertracing.io/docs/1.21/client-libraries/#supported-libraries), it has been selected [dvoitekh/kubernetes-microservices](https://github.com/dvoitekh/kubernetes-microservices), a OSS *Simple Kubernetes-based app*, which contains 3 services:

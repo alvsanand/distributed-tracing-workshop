@@ -1,3 +1,8 @@
+---
+title: Technical Overview
+image: /img/distributed-tracing_practice_preview.png
+---
+
 # Technical Overview
 
 Before beginning with the workshop labs, we are going to learn more about distributed tracing, OpenTracing and Jaeger.
@@ -20,7 +25,7 @@ Developers can use distributed tracing to help debug and optimize their code.
 
 ## OpenTracing
 
-![OpenTracing](./opentracing.png)
+![OpenTracing](./img/opentracing.png)
 
 > Last year, [OpenTelemetry](https://opentelemetry.io/) was announced as a new CNCF sandbox project resulting from a merger of **OpenTracing** and **OpenCensus**.
 
@@ -135,7 +140,7 @@ Different Tracer implementations vary in how and what parameters they receive at
 
 In order to trace across process boundaries in distributed systems, services need to be able to continue the trace injected by the client that sent each request. OpenTracing allows this to happen by providing inject and extract methods that encode a span’s context into a carrier.
 
-![Propagating a Trace with Inject/Extract](.//opentracing_extract.png)
+![Propagating a Trace with Inject/Extract](./img/opentracing_extract.png)
 
 ### Tracing Systems
 
@@ -154,7 +159,7 @@ The following table lists all currently known OpenTracing Tracers:
 
 ## Jaeger
 
-<img align="left" src="./jaeger.png">
+<img align="left" src="./img/jaeger.png">
 
 Jaeger, inspired by [Dapper](https://research.google/pubs/pub36356/) and [OpenZipkin](http://zipkin.io), is a distributed tracing system released as open source by **Uber Technologies**.
 
@@ -180,9 +185,9 @@ Jaeger can be deployed either as all-in-one binary, where all Jaeger backend com
 There are two main deployment options:
 
 1. Collectors are writing directly to storage.
-  ![Jaeger archtiecture](./jaeger_architecture_v1.png)
+  ![Jaeger archtiecture](./img/jaeger_architecture_v1.png)
 2. Collectors are writing to Kafka as a preliminary buffer.
-  ![Jaeger archtiecture](./jaeger_architecture_v2.png)
+  ![Jaeger archtiecture](./img/jaeger_architecture_v2.png)
 
 The most important components of Jaeger are:
 

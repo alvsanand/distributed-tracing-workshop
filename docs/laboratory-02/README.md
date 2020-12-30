@@ -1,3 +1,8 @@
+---
+title: Lab 2 - Using Jaeger
+image: /img/distributed-tracing_practice_preview.png
+---
+
 # Lab 2 - Using Jaeger
 
 In the second laboratory of the workshop, we will install [HotROD (Rides on Demand)](https://github.com/jaegertracing/jaeger/tree/master/examples/hotrod) is a demo application that consists of several microservices and illustrates the use of the OpenTracing API. Afterwards, we will review most of the Jaeger features.

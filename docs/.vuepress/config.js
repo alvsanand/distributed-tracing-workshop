@@ -1,9 +1,15 @@
 const path = require("path");
 
+const urlPath = '/distributed-tracing-workshop';
+const domain = 'https://alvsanand.github.io' + urlPath;
+const title = 'Distributed Tracing Workshop';
+const description = title;
+const author = 'alvsanand';
+
 module.exports = {
-    title: "Distributed Tracing Workshop",
-    description: "Distributed Tracing Workshop",
-    base: '/distributed-tracing-workshop/',
+    title: title,
+    description: title,
+    base: urlPath + '/',
     head: [
         ['link', { rel: "icon", href: "/favicon.ico" }]
     ],
@@ -12,11 +18,12 @@ module.exports = {
         lastUpdated: false,
         docsDir: 'docs',
         editLinks: false,
+        domain: domain,
         logo: '/img/distributed-tracing_practice.png',
         nav: [
             { text: 'Home', link: '/' },
             {
-                text: '@alvsanand',
+                text: '@' + author,
                 items: [
                     { text: 'Github', link: 'https://github.com/alvsanand' },
                     { text: 'LinekdIn', link: 'https://www.linkedin.com/in/alvsanand/' },
