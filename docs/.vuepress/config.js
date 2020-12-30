@@ -1,9 +1,8 @@
-
 const path = require("path");
 
 module.exports = {
-    title: "Distributed Tracing Workshop ",
-    description: "Distributed Tracing Workshop ",
+    title: "Distributed Tracing Workshop",
+    description: "Distributed Tracing Workshop",
     base: '/distributed-tracing-workshop/',
     head: [
         ['link', { rel: "icon", href: "/favicon.ico" }]
@@ -11,12 +10,18 @@ module.exports = {
     themeConfig: {
         displayAllHeaders: true,
         lastUpdated: false,
-        repo: 'https://github.com/alvsanand/distributed-tracing-workshop',
         docsDir: 'docs',
         editLinks: false,
         logo: '/img/distributed-tracing_practice.png',
         nav: [
             { text: 'Home', link: '/' },
+            {
+                text: '@alvsanand',
+                items: [
+                    { text: 'Github', link: 'https://github.com/alvsanand' },
+                    { text: 'LinekdIn', link: 'https://www.linkedin.com/in/alvsanand/' },
+                ]
+            },
             { text: 'Bluetab', link: 'https://bluetab.net/' },
             {
                 text: 'Links',

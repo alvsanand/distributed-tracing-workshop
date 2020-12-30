@@ -1,4 +1,4 @@
-# Distributed Tracing Workshop 
+# Distributed Tracing Workshop
 
 This project contains all the material used in the Distributed Tracing Workshop.
 

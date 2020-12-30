@@ -1,10 +1,10 @@
 {
     "name": "distributed-tracing-workshop",
     "version": "1.0.0",
-    "description": "Distributed Tracing Workshop .",
+    "description": "Distributed Tracing Workshop",
     "main": "index.js",
     "author": "alvsanand",
-    "license": "MIT",
+    "license": "Apache",
     "private": false,
     "scripts": {
         "start": "vuepress dev docs",

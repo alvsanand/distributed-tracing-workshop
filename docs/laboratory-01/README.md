@@ -19,7 +19,7 @@ We will perform the following tasks:
 
 ## 1. Installing Minikube
 
-Depending of your OS, you will have different options for installing Minilube.
+Depending of your OS, you will have different options for installing Minikube.
 
 :::: tabs type:border-card
 
@@ -88,11 +88,11 @@ kubectl config use-context minikube
 kubectl get po -A
 ```
 
-Alternatively, minikube can download the appropriate version of kubectl, if you don't mind the double-dashes in the command-line:
+Alternatively, minikube can download the appropriate version of kubectl, if you don't mind to use an alias in the command-line:
 
 ```sh
 alias kubectl="minikube kubectl --"
-kubectl -- get po -A
+kubectl get po -A
 ```
 
 minikube bundles the Kubernetes Dashboard, allowing you to get easily acclimated to your new environment:
