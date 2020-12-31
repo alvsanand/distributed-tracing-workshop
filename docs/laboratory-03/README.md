@@ -112,7 +112,21 @@ Now, we are able to trace all requests from the Python and Ruby services. Howeve
 
     <<< @/docs/laboratory-03/files/changes_flaskapp_app_views_2.py
 
-## 5. Installing modified version of the application in k8s
+## 5. Adding children spans
+
+There is only left one last change into the code. As we have seen earlier, it is very important to trace all services that could create bottlenecks in the system and our MongoDB database is our biggest candidate. Therefore, we are going to add children traces to ```flask-app``` which will trace all the call to MongoDB.
+
+This is the plan:
+
+1. Create a decorator so we are able to trace every method of the class ```app.modeles.BaseRecord``` which is a MongoDB wrapper class.
+2. This decorator will create a child span with some information about the operation performed into MongoDB.
+3. We will add the decorator to all methods of the class ```app.modeles.BaseRecord``` that actually perform an operation to MonogoDB.
+
+Let`s go and edit **flask-app/app/models.py** adding the children spans to the MongoDB wrapper class:
+
+<<< @/docs/laboratory-03/files/changes_flask-app_app_models.py
+
+## 6. Installing modified version of the application in k8s
 
 After all changes are performed, it is time to install again the application with the modifications.
 
@@ -132,7 +146,7 @@ After all changes are performed, it is time to install again the application wit
 
     <<< @/docs/laboratory-03/files/kubernetes-microservices_deployment.sh
 
-## 6. Testing the application
+## 7. Testing the application
 
 Finally, let's go test the application and check Jaeger for the service traces.
 
